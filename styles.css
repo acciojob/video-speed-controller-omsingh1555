@@ -1,2 +1,48 @@
 
 /* Your CSS Code here. */
+html {
+  box-sizing: border-box;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+body {
+  margin: 0;
+  background: #222;
+  color: white;
+  font-family: sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.speed {
+  width: 50px;
+  height: 430px;
+  margin-left: 10px;
+  background: #eee;
+  cursor: pointer;
+  position: relative;
+  border-radius: 5px;
+}
+
+.speed-bar {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background: linear-gradient(to top, #f00, #ff0);
+  height: 16%;
+  text-align: center;
+  color: black;
+  font-size: 1.2rem;
+  font-weight: bold;
+  padding-top: 5px;
+}
