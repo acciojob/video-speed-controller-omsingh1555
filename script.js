@@ -1,16 +1,38 @@
-const speed = document.querySelector('.speed');
-const bar = speed.querySelector('.speed-bar');
-const video = document.querySelector('video');
+const video = document.querySelector('.viewer');
+const toggle = document.querySelector('.toggle');
+const volume = document.querySelector('[name="volume"]');
+const playbackRate = document.querySelector('[name="playbackRate"]');
+const progress = document.querySelector('.progress');
+const progressBar = document.querySelector('.progress__filled');
+const skipButtons = document.querySelectorAll('[data-skip]');
 
-speed.addEventListener('mousemove', function (e) {
-  const y = e.pageY - this.offsetTop;
-  const percent = y / this.offsetHeight;
-  const min = 0.4;
-  const max = 4;
-  const height = Math.round(percent * 100) + '%';
-  const playbackRate = percent * (max - min) + min;
+function togglePlay() {
+  const method = video.paused ? 'play' : 'pause';
+  video[method]();
+}
 
-  bar.style.height = height;
-  bar.textContent = playbackRate.toFixed(2) + '×';
-  video.playbackRate = playbackRate;
-});
+function updateButton() {
+  toggle.textContent = video.paused ? '►' : '❚❚';
+}
+
+function handleRangeUpdate() {
+  video[this.name] = this.value;
+}
+
+function skip() {
+  video.currentTime += parseFloat(this.dataset.skip);
+}
+
+function handleProgress() {
+  const percent = (video.currentTime / video.duration) * 100;
+  progressBar.style.flexBasis = `${percent}%`;
+}
+
+toggle.addEventListener('click', togglePlay);
+video.addEventListener('play', updateButton);
+video.addEventListener('pause', updateButton);
+volume.addEventListener('input', handleRangeUpdate);
+playbackRate.addEventListener('input', handleRangeUpdate);
+skipButtons.forEach(button => button.addEventListener('click', skip));
+video.addEventListener('timeupdate', handleProgress);
+
